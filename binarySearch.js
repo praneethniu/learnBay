@@ -1,13 +1,13 @@
 const binarySearch = (nums, param) => {
   let binary = (nums, start, end, param) => {
-    if (start <= end) {
-      let mid = Math.floor((start + end) / 2)
-      if (nums[mid] === param) {
+    if (start <= end) {   //1
+      let mid = Math.floor((start + end) / 2)//1
+      if (nums[mid] === param) {//1
         return mid
-      } else if (nums[mid] > param) {
-        return binary(nums, start, mid, param)
+      } else if (nums[mid] > param) { //1
+        return binary(nums, start, mid, param)//T(n/2)
       } else {
-        return binary(nums, mid + 1, end, param)
+        return binary(nums, mid + 1, end, param)//T(n/2)
       }
     }
     return -1
