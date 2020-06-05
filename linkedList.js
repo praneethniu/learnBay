@@ -20,14 +20,8 @@ class LinkedList {
 
   search = (val) => {
     let x = this.head
-    if (!x) return "list empty"
-    while (x.next !== null) {
-      if (x.val === val) return "found"
-      x = x.next
-    }
-    if (x.val === val) return "found"
-
-    return "not found"
+    while (x && x.val !== val) x = x.next
+    return x === null ? "not found" : "found"
   }
 
   insertElementAtHead = (val) => {
@@ -63,4 +57,4 @@ n.insertElementAtHead(4)
 console.log(n.head)
 n.deleteNode(6)
 console.log(n.head)
-console.log(n.search(4))
+console.log(n.search(6))
