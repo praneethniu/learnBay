@@ -1,3 +1,5 @@
+var assert = require("assert")
+
 class Node {
   constructor(val) {
     this.val = val
@@ -6,52 +8,35 @@ class Node {
 }
 
 class Queue {
+  head = null
+  tail = null
+  size = 0
   createNode = (val) => new Node(val)
   push = (val) => {
-    if (!this.head) {
-      this.head = this.createNode(val)
-      return
-    }
     let currNode = this.createNode(val)
-    currNode.next = this.head
-    this.head = currNode
+    if (!this.head) {
+      this.head = currNode
+      this.tail = currNode
+    } else {
+      this.tail.next = currNode
+      this.tail = currNode
+    }
+    this.size++
   }
 
   pop = () => {
     let currNode = this.head
     if (!currNode) return
-
-    if (!currNode.next) {
-      this.head = null
-      return
-    }
-    let prevNode = null
-    while (currNode && currNode.next) {
-      prevNode = currNode
-      currNode = currNode.next
-    }
-    prevNode.next = null
+    this.head = currNode.next
+    currNode.next = null
+    this.size--
   }
 
   empty = () => (this.head = null)
 
-  size = () => {
-    let currNode = this.head
-    if (!currNode) return 0
-    let count = 1
-    while (currNode && currNode.next) {
-      currNode = currNode.next
-      count++
-    }
-    return count
-  }
+  getSize = () => this.size
 
-  front = () => {
-    let currNode = this.head
-    if (!currNode) return
-    while (currNode && currNode.next) currNode = currNode.next
-    return currNode.val
-  }
+  front = () => this.head && this.head.val
 }
 
 let queue = new Queue()
@@ -59,9 +44,8 @@ queue.push(1)
 queue.push(2)
 queue.push(16)
 console.log(queue.head)
-console.log("SIZE ", queue.size())
-console.log("TOP ", queue.front())
-
+assert.equal(queue.getSize(), 3)
+console.log("FRONT ", queue.front())
 queue.pop()
 queue.pop()
 console.log(queue.head)
